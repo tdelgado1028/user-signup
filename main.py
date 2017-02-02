@@ -23,36 +23,36 @@ def build_page ():
 
     username_label = "<label>Username</label>"
     username_input = "<input type=text name='username' required>"
-    # username_error = "<font color='red'>That's not a valid username</font>"
+    username_error = "<font color='red'>That's not a valid username</font>"
 
     password_label = "<label>Password</label>"
     password_input = "<input type=text name='password' required>"
-    # password_error = "<font color='red'>That's not a valid password</font>"
+    password_error = "<font color='red'>That's not a valid password</font>"
 
     verify_label = "<label>Verify Password</label>"
     verify_input = "<input type=text name='verify' required>"
-    # verify_error = "<font color='red'>Passwords don't match</font>"
+    verify_error = "<font color='red'>Passwords don't match</font>"
 
     email_label = "<label>Email (optional)</label>"
     email_input = "<input type=email name='email'>"
-    # email_error = "<font color='red'>That's not a valid email</font>"
+    email_error = "<font color='red'>That's not a valid email</font>"
 
     submit = "<input type='submit'/>"
 
-    # form = ("<form method='post'>" +
-    #         username_label + "         " + username_input + username_error + "<br>" +
-    #         password_label + "         " + password_input + password_error +  "<br>" +
-    #         verify_label + "  " + verify_input + verify_error +  "<br>" +
-    #         email_label + " " + email_input + email_error +  "<br><br>" +
-    #         submit + "</form>")
-
-    form = ("<form method='post'>" +
-            username_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + username_input + "&nbsp;" + "<br>" +#username_error + "<br>" +
-            password_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ password_input + "&nbsp;" + "<br>" +#password_error +  "<br>" +
-            verify_label + "&nbsp;"+ verify_input + "&nbsp;" + "<br>" +#verify_error +  "<br>" +
-            email_label + "&nbsp;"+ email_input + "&nbsp;" + "<br><br>" +#email_error +  "<br><br>" +
-            submit + "</pre></form>")
-
+    # form = ("<form method='post' action='/add'>" +
+    #         username_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + username_input + "&nbsp;" + "<br>" +#username_error + "<br>" +
+    #         password_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ password_input + "&nbsp;" + "<br>" +#password_error +  "<br>" +
+    #         verify_label + "&nbsp;"+ verify_input + "&nbsp;" + "<br>" +#verify_error +  "<br>" +
+    #         email_label + "&nbsp;"+ email_input + "&nbsp;" + "<br><br>" +#email_error +  "<br><br>" +
+    #         submit + "</pre></form>")
+    form = ("<form method='post' action='/add'>" +
+            "<table><tbody>" +
+            "<tr><td>" + username_label + "</td><td>" + username_input + "</td><td>" + username_error + "</td></tr>" +
+            "<tr><td>" + password_label + "</td><td>" + password_input + "</td><td>" + password_error + "</td></tr>" +
+            "<tr><td>" + verify_label + "</td><td>" + verify_input + "</td><td>" + verify_error + "</td></tr>" +
+            "<tr><td>" + email_label + "</td><td>" + email_input + "</td><td>" + email_error + "</td></tr>" +
+            "</tbody></table>"+
+            submit + "</form>")
 
     return header + form
 
