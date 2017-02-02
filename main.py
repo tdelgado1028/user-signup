@@ -16,9 +16,53 @@
 #
 import webapp2
 
+
+def build_page ():
+
+    header = "<h1>Signup</h1>"
+
+    username_label = "<label>Username</label>"
+    username_input = "<input type=text name='username' required>"
+    # username_error = "<font color='red'>That's not a valid username</font>"
+
+    password_label = "<label>Password</label>"
+    password_input = "<input type=text name='password' required>"
+    # password_error = "<font color='red'>That's not a valid password</font>"
+
+    verify_label = "<label>Verify Password</label>"
+    verify_input = "<input type=text name='verify' required>"
+    # verify_error = "<font color='red'>Passwords don't match</font>"
+
+    email_label = "<label>Email (optional)</label>"
+    email_input = "<input type=email name='email'>"
+    # email_error = "<font color='red'>That's not a valid email</font>"
+
+    submit = "<input type='submit'/>"
+
+    # form = ("<form method='post'>" +
+    #         username_label + "         " + username_input + username_error + "<br>" +
+    #         password_label + "         " + password_input + password_error +  "<br>" +
+    #         verify_label + "  " + verify_input + verify_error +  "<br>" +
+    #         email_label + " " + email_input + email_error +  "<br><br>" +
+    #         submit + "</form>")
+
+    form = ("<form method='post'>" +
+            username_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + username_input + "&nbsp;" + "<br>" +#username_error + "<br>" +
+            password_label + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ password_input + "&nbsp;" + "<br>" +#password_error +  "<br>" +
+            verify_label + "&nbsp;"+ verify_input + "&nbsp;" + "<br>" +#verify_error +  "<br>" +
+            email_label + "&nbsp;"+ email_input + "&nbsp;" + "<br><br>" +#email_error +  "<br><br>" +
+            submit + "</pre></form>")
+
+
+    return header + form
+
+
 class MainHandler(webapp2.RequestHandler):
+
     def get(self):
-        self.response.write('Hello world!')
+        content = build_page()
+        self.response.write(content)
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
