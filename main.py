@@ -16,7 +16,25 @@
 #
 import webapp2
 import re
-#import cgi
+import cgi
+
+# html boilerplate for the top of every page
+page_header = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+"""
+
+# html boilerplate for the bottom of every page
+page_footer = """
+</body>
+</html>
+"""
+
 
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
 def valid_username(username):
@@ -32,8 +50,6 @@ def valid_email(email):
 
 
 def build_page (username_check, password_check, verify_check, email_check):
-
-    header = "<h1>Signup</h1>"
 
     username_label = "<label>Username</label>"
     username_input = "<input type=text name='username' required>"
@@ -68,7 +84,7 @@ def build_page (username_check, password_check, verify_check, email_check):
             "</tbody></table>"+
             submit + "</form>")
 
-    return header + form
+    return form
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -79,37 +95,16 @@ class MainHandler(webapp2.RequestHandler):
         password_check = True
         verify_check = True
         email_check = True
-        content = build_page(username_check, password_check, verify_check, email_check)
+        page_content = build_page(username_check, password_check, verify_check, email_check)
+        content = page_header + page_content + page_footer
         self.response.write(content)
-
-        #GETTING VALUES
-        # username = self.request.get("username")
-        # password = self.request.get("password")
-        # verify = self.request.get("verify")
-        # email = self.request.get("email")
-
-        #  if not valid_username(username):
-        #      username_check = False
-        # if !valid_password(password):
-        #     password_check = False
-        # if verify != password:
-        #     username_check = False
-        # if !valid_email(email):
-        #     email_check = False
-        #
-        # content = build_page(username_check, password_check, verify_check, email_check)
-        # self.response.write(content)
-
-            # self.redirect('/Welcome?username=' + username)
-        # else:
-        #     self.redirect('/?username=' + username + '&username_error=' + username_error + '&password_error=' + password_error +
-        # '&verify_error=' + verify_error + '&email=' + email + '&email_error=' + email_error)
 
 
 class AddUser(webapp2.RequestHandler):
     #HANDLES REQUESTS COMING IN TO '/add'
 
     def post(self):
+        #INITIALIZE CHECKS TO TRUE
         username_check = True
         password_check = True
         verify_check = True
@@ -121,7 +116,7 @@ class AddUser(webapp2.RequestHandler):
         verify = self.request.get("verify")
         email = self.request.get("email")
 
-        #CHECKING VELIDITY OF VALUES
+        #CHECKING VALIDITY OF VALUES
         if not valid_username(username):
             username_check = False
         if not valid_password(password):
@@ -133,22 +128,25 @@ class AddUser(webapp2.RequestHandler):
 
         #BASED ON VALIDITY, DIRECT USER TO WELCOME OR REJECT
         if username_check and password_check and verify_check and email_check:
-            #RELOAD PAGE (APPROPRIATELY)
-            #self.redirect('/welcome?username=' + username)
-            self.response.write("submit check pass")
-        else:
             #GO TO WELCOME
-            self.response.write("username_check"+str(username_check)+"<br>"+"password_check"+str(password_check)+"<br>"+"verify_check"+str(verify_check)+"<br>""email_check"+str(email_check)+"<br>") #self.response.write("submit error")
+            #self.redirect('/welcome')
+            self.redirect('/welcome?username=' + username)
+            #self.response.write("submit check pass")
+        else:
+            #RELOAD PAGE (APPROPRIATELY)
+            the_form = cgi.FieldStorage()
+            self.redirect('/')
+            #self.response.write("username_check"+str(username_check)+"<br>"+"password_check"+str(password_check)+"<br>"+"verify_check"+str(verify_check)+"<br>""email_check"+str(email_check)+"<br>") #self.response.write("submit error")
 
 
 class Welcome(webapp2.RequestHandler):
-    #HANDLES REQUESTS COMING IN TO '/add'
-    def post(self):
+    #HANDLES REQUESTS COMING IN TO '/welcome'
+    def get(self):
+        #content ="<h2>" +"Welcome " + "</h2>"
         username = self.request.get("username")
         content ="<h2>" +"Welcome " + username + "</h2>"
         self.response.write(content)
-
-
+        #self.response.write("Hello welcome")
 
 
 app = webapp2.WSGIApplication([
